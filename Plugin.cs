@@ -33,15 +33,17 @@ namespace PauseCredit
 		{
 			public static void Postfix(TextMeshProUGUI ____multiLineAuthorNameText, TextMeshProUGUI ____authorNameText, bool ____showSongSubName, IPreviewBeatmapLevel previewBeatmapLevel)
 			{
+				var newText = $"<size=80%>{previewBeatmapLevel.songAuthorName}</size> <size=90%>[<color=#89ff89>{previewBeatmapLevel.levelAuthorName.Replace(@"<", "<\u200B").Replace(@">", ">\u200B")}</color>]</size>";
+				if (string.IsNullOrWhiteSpace(previewBeatmapLevel.levelAuthorName)) return;
 				if (____showSongSubName && previewBeatmapLevel.songSubName.Length > 0)
 				{
 					____multiLineAuthorNameText.richText = true;
-					____multiLineAuthorNameText.text = $"<size=80%>{previewBeatmapLevel.songAuthorName}</size> <size=90%>[<color=#89ff89>{previewBeatmapLevel.levelAuthorName.Replace(@"<", "<\u200B").Replace(@">", ">\u200B")}</color>]</size>";
+					____multiLineAuthorNameText.text = newText;
 				}
 				else
 				{
 					____authorNameText.richText = true;
-					____authorNameText.text = $"<size=80%>{previewBeatmapLevel.songAuthorName}</size> <size=90%>[<color=#89ff89>{previewBeatmapLevel.levelAuthorName.Replace(@"<", "<\u200B").Replace(@">", ">\u200B")}</color>]</size>";
+					____authorNameText.text = newText;
 				}
 			}
 		}
